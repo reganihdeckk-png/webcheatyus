@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b18">
+<title>YUS Store — Premium Digital Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="orb one"></div><div class="orb two"></div>
+<header class="topbar">
+  <div class="wrap nav">
+    <a href="#home" class="brand">YUS <span>STORE</span></a>
+    <nav class="navlinks"><a href="#home">Beranda</a><a href="#produk">Produk</a><a href="#pembayaran">Pembayaran</a></nav>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="navbtn" onclick="goToCart()">🛒 <span id="cartCount">0</span></button>
+      <button class="btn small" id="accountBtn" onclick="openAuth()">Masuk</button>
+    </div>
+  </div>
+</header>
+
+<main id="app" class="hidden">
+  <section id="home" class="wrap hero">
+    <div>
+      <span class="pill">✦ DIGITAL PREMIUM STORE</span>
+      <h1>Upgrade pengalamanmu.<br><span class="gradient-text">Pilih produk favorit.</span></h1>
+      <p>Temukan berbagai pilihan akses premium digital, client, proxy, plugin, dan produk lainnya. Pilih durasi, masukkan ke keranjang, lalu lanjutkan pemesanan dengan mudah.</p>
+      <div class="hero-actions"><a href="#produk" class="btn">Jelajahi Produk ↗</a><button class="btn secondary" onclick="goToCart()">Lihat Keranjang</button></div>
+      <div class="statrow">
+        <div class="stat"><strong id="productCount">0</strong><small>Variasi produk</small></div>
+        <div class="stat"><strong>3</strong><small>Metode wallet</small></div>
+        <div class="stat"><strong>24/7</strong><small>Katalog online</small></div>
+      </div>
+    </div>
+    <div class="hero-card glass">
+      <span class="pill">⚡ SIMPLE • MODERN • FAST</span>
+      <h3>Belanja digital lebih praktis</h3>
+      <p class="muted">Pilih produk dan durasi yang sesuai. Semua harga ditampilkan sebelum checkout.</p>
+      <div style="font-size:60px;margin:20px 0 5px;text-align:center;filter:drop-shadow(0 0 25px #966bff66)">🛍️</div>
+      <div class="notice">Pastikan nama produk, durasi, dan total pesanan sudah benar sebelum melakukan pembayaran.</div>
+    </div>
+  </section>
+
+  <section id="produk" class="wrap section">
+    <div class="section-head"><div><h2>Katalog Produk</h2><p>Pilih produk dan durasi yang kamu inginkan.</p></div><span class="pill">● KATALOG AKTIF</span></div>
+    <div class="toolbar"><input id="searchInput" class="field search" placeholder="Cari produk..." oninput="renderProducts()"><select id="sortSelect" class="field" onchange="renderProducts()"><option value="default">Urutan default</option><option value="low">Harga termurah</option><option value="high">Harga tertinggi</option><option value="az">Nama A–Z</option></select></div>
+    <div class="category-row" id="categoryRow"></div>
+    <div id="productGrid" class="grid"></div>
+  </section>
+
+  <section id="keranjang" class="wrap section">
+    <div class="section-head"><div><h2>Keranjang & Checkout</h2><p>Periksa pesanan sebelum mengirim konfirmasi.</p></div></div>
+    <div class="two-col">
+      <div class="box glass"><h3>🛒 Keranjang Belanja</h3><div id="cartItems" class="cart-list"></div><div id="cartEmpty" class="empty">Keranjang masih kosong.<br>Pilih produk dari katalog untuk mulai berbelanja.</div></div>
+      <div class="box glass">
+        <h3>Ringkasan Pesanan</h3>
+        <div class="totals"><span>Jumlah item</span><strong id="summaryCount">0</strong></div>
+        <div class="totals"><span>Subtotal</span><strong id="subtotal">Rp0</strong></div>
+        <div class="totals"><span>Biaya tambahan</span><strong>Rp0</strong></div>
+        <div class="totals final"><span>Total</span><strong id="total">Rp0</strong></div>
+        <label for="buyerName" class="muted" style="font-size:12px;display:block;margin:15px 0 6px">Nama pembeli</label><input id="buyerName" class="field" style="width:100%" placeholder="Nama kamu">
+        <label for="buyerContact" class="muted" style="font-size:12px;display:block;margin:12px 0 6px">Kontak pembeli (opsional)</label><input id="buyerContact" class="field" style="width:100%" placeholder="Nomor WhatsApp / username">
+        <label for="paymentMethod" class="muted" style="font-size:12px;display:block;margin:12px 0 6px">Metode pembayaran</label>
+        <select id="paymentMethod" class="field" style="width:100%"><option value="DANA">DANA — 08815722784</option><option value="GoPay">GoPay — 08815722784</option><option value="QRIS">QRIS</option></select>
+        <button class="btn" style="width:100%;margin-top:15px" onclick="checkout()">Lanjutkan Pesanan via WhatsApp ↗</button>
+        <p class="fineprint">Pesanan akan disusun menjadi pesan WhatsApp. Konfirmasi pesanan tidak otomatis memverifikasi pembayaran.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pembayaran" class="wrap section">
+    <div class="section-head"><div><h2>Metode Pembayaran</h2><p>Wallet only — gunakan detail pembayaran di bawah.</p></div><span class="pill">WALLET ONLY</span></div>
+    <div class="box glass">
+      <div class="pay-grid">
+        <div class="pay-card"><strong>🔵 DANA</strong><p>Nomor: <b>08815722784</b></p><button class="btn secondary small" onclick="copyText('08815722784')">Salin nomor</button></div>
+        <div class="pay-card"><strong>🟢 GoPay</strong><p>Nomor: <b>08815722784</b></p><button class="btn secondary small" onclick="copyText('08815722784')">Salin nomor</button></div>
+      </div>
+      <div class="pay-card" style="margin-top:12px;text-align:center"><strong>▦ QRIS</strong><p>Scan QRIS di bawah jika ingin membayar menggunakan QRIS.</p><img class="qris-img" src="https://files.catbox.moe/g6zywl.jpeg" alt="QRIS pembayaran YUS Store" onerror="this.style.display='none';document.getElementById('qrisError').classList.remove('hidden')"><p id="qrisError" class="hidden">Gambar QRIS tidak dapat dimuat. Buka tautan QRIS secara langsung.</p><a href="https://files.catbox.moe/g6zywl.jpeg" target="_blank" rel="noopener">Buka gambar QRIS</a></div>
+      <div class="notice" style="margin-top:14px">Penting: pastikan nama penerima dan nominal sudah sesuai. Simpan bukti transfer dan kirim kepada penjual untuk verifikasi manual. Jangan membagikan PIN atau kode OTP.</div>
+    </div>
+  </section>
+
+  <section id="akun" class="wrap section hidden">
+    <div class="section-head"><div><h2>Akun Saya</h2><p>Informasi sesi akun lokal di browser ini.</p></div></div>
+    <div class="box glass"><p id="accountInfo"></p><button class="btn danger" onclick="logout()">Keluar</button><p class="fineprint">Akun pada versi demo disimpan di browser ini, bukan server. Jangan gunakan kata sandi penting.</p></div>
+  </section>
+</main>
+
+<div id="loginGate" class="wrap section">
+  <div class="box glass" style="max-width:650px;margin:65px auto;text-align:center;padding:35px 24px">
+    <span class="pill">🔐 MEMBER ACCESS</span><h1 style="font-size:36px;margin:16px 0 8px">Selamat datang di <span class="gradient-text">YUS Store</span></h1>
+    <p class="muted" style="line-height:1.7">Masuk atau buat akun demo untuk membuka katalog dan keranjang. Akun ini hanya tersimpan di browser perangkatmu.</p>
+    <button class="btn" onclick="openAuth('login')">Masuk ke Toko</button> <button class="btn secondary" onclick="openAuth('register')">Buat Akun</button>
+    <p class="fineprint" style="max-width:460px;margin:20px auto 0">Demo HTML tidak menyediakan keamanan autentikasi server. Untuk toko nyata, gunakan backend dan penyimpanan password yang aman.</p>
+  </div>
+</div>
+
+<footer><div class="wrap footerrow"><span>© <span id="year"></span> YUS Store. All rights reserved.</span><span>Digital Store • Liquid Glass UI</span></div></footer>
+
+<div id="authModal" class="modal hidden">
+  <div class="modal-card glass">
+    <button class="btn secondary small close" onclick="closeAuth()">✕</button>
+    <span class="pill">YUS STORE ACCOUNT</span><h2 id="authTitle">Masuk</h2><p id="authDesc" class="muted" style="font-size:13px">Masuk untuk melanjutkan.</p>
+    <form id="authForm" onsubmit="submitAuth(event)">
+      <label for="authUsername">Username</label><input id="authUsername" class="field" required minlength="3" maxlength="24" autocomplete="username" placeholder="Masukkan username">
+      <label for="authPassword">Kata sandi</label><input id="authPassword" class="field" required minlength="4" maxlength="64" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi">
+      <button class="btn" id="authSubmit" type="submit">Masuk</button>
+    </form>
+    <p style="font-size:13px;color:var(--muted);text-align:center"><span id="authSwitchText">Belum punya akun?</span> <a href="#" onclick="toggleAuthMode(event)" style="color:#c6b3ff;font-weight:800" id="authSwitch">Daftar</a></p>
+    <p class="fineprint">Demo lokal: jangan gunakan kata sandi yang dipakai di layanan lain.</p>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
